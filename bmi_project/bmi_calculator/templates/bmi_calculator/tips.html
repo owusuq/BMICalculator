@@ -1,0 +1,17 @@
+{% extends "bmi_calculator/base.html" %}
+
+{% block content %}
+    <h1>Tips for: {{ category }}</h1>
+
+    {% if tip_list %}
+        <ul>
+            {% for tip in tip_list %}
+                <li>{{ tip }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No tips available for this category.</p>
+    {% endif %}
+
+    <a class="button-link" href="{% url 'home' %}">Calculate Again</a>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "bmi_calculator/base.html" %}
+
+{% block content %}
+    <h1>Your Result</h1>
+
+    {% if error_message %}
+        <p class="error">{{ error_message }}</p>
+        <a class="button-link" href="{% url 'home' %}">Try Again</a>
+    {% else %}
+        <p>Your BMI is:</p>
+        <p class="bmi-number">{{ bmi }}</p>
+        <p>Category: <strong>{{ category }}</strong></p>
+
+        <a class="button-link" href="{% url 'tips' %}?category={{ category }}">See Tips</a>
+        <br>
+        <a class="button-link" href="{% url 'home' %}">Calculate Again</a>
+    {% endif %}
+{% endblock %}
