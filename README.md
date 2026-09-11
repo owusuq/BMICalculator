@@ -11,7 +11,7 @@ To run the project on your own computer:
 
 My purpose in writing this software was to learn how Django routes URLs to view functions, how data submitted by a user flows into Python code, and how that data can be used to dynamically build different HTML pages.
 
-[Software Demo Video](http://youtube.link.goes.here)
+[Software Demo Video](https://youtu.be/52orjQ2Dbsc)
 
 # Web Pages
 
