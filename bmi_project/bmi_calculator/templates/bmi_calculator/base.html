@@ -1,9 +1,15 @@
+{% comment %} base.html -- the shared "parent" template. It holds the parts every page has in common
+   (page skeleton, CSS styling, white card, footer). The other three templates say
+   {% extends "bmi_calculator/base.html" %} and only fill in the {% block content %} area below,
+   so we never repeat this layout in each file. Django comments like this one are removed
+   before the page is sent, so they never show up in the browser's "View Source". {% endcomment %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>BMI Calculator</title>
     <style>
+        /* Page background and centering: flexbox centers the white card horizontally. */
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f6f8;
@@ -11,6 +17,7 @@
             justify-content: center;
             padding-top: 50px;
         }
+        /* The white rounded box that holds each page's content. */
         .card {
             background: white;
             padding: 30px 40px;
@@ -18,22 +25,26 @@
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
             width: 350px;
         }
+        /* Page heading style. */
         h1 {
             font-size: 22px;
             color: #2c3e50;
         }
+        /* Form labels sit on their own line above each input. */
         label {
             display: block;
             margin-top: 15px;
             font-weight: bold;
             color: #34495e;
         }
+        /* Number inputs fill the card width; box-sizing keeps padding inside that width. */
         input[type="number"] {
             width: 100%;
             padding: 8px;
             margin-top: 5px;
             box-sizing: border-box;
         }
+        /* Both real <button> elements and <a class="button-link"> links look like blue buttons. */
         button, .button-link {
             margin-top: 20px;
             display: inline-block;
@@ -46,15 +57,18 @@
             text-decoration: none;
             font-size: 15px;
         }
+        /* The large BMI value on the result page. */
         .bmi-number {
             font-size: 40px;
             font-weight: bold;
             color: #2980b9;
         }
+        /* Red bold text used for error messages on the result page. */
         .error {
             color: #c0392b;
             font-weight: bold;
         }
+        /* Indents the bullet list of tips on the tips page. */
         ul {
             padding-left: 20px;
         }
@@ -62,9 +76,11 @@
 </head>
 <body>
     <div class="card">
+        {# A "block" is a placeholder. Each child page replaces this block with its own HTML. #}
         {% block content %}
         {% endblock %}
     </div>
+    {# Footer stays fixed at the bottom of the window on every page. #}
     <footer style="position: fixed; bottom: 0; left: 0; width: 100%; text-align: center; font-size: 12px; color: #7f8c8d; padding: 12px 0; background: #f4f6f8;">Kwadjo Owusu-Ansah Quarshie &middot; CSE 310 &middot; Web Apps Module &middot; BYU-Pathway</footer>
 </body>
 </html>

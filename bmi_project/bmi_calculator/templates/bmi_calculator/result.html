@@ -1,16 +1,23 @@
 {% extends "bmi_calculator/base.html" %}
+{% comment %} result.html -- PAGE 2. Dynamic: what appears depends on the values in the context dictionary that
+   views.result() passes in (bmi, category, error_message). {{ name }} prints a variable's value;
+   {% if %} / {% else %} / {% endif %} choose which HTML is shown. {% endcomment %}
 
 {% block content %}
     <h1>Your Result</h1>
 
+    {# error_message is None (treated as False) unless the view found bad input. #}
     {% if error_message %}
         <p class="error">{{ error_message }}</p>
         <a class="button-link" href="{% url 'home' %}">Try Again</a>
     {% else %}
+        {# No error, so show the successful result. #}
         <p>Your BMI is:</p>
         <p class="bmi-number">{{ bmi }}</p>
         <p>Category: <strong>{{ category }}</strong></p>
 
+        {% comment %} Builds a link such as /tips/?category=Normal weight. This is how the category is handed
+           to the tips page: it travels in the query string and views.tips() reads it back. {% endcomment %}
         <a class="button-link" href="{% url 'tips' %}?category={{ category }}">See Tips</a>
         <br>
         <a class="button-link" href="{% url 'home' %}">Calculate Again</a>

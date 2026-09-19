@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Our own app. Django only finds an app's templates (and models, etc.) if the
+    # app is listed here, so without this line the pages would not be found.
     'bmi_calculator',
 ]
 

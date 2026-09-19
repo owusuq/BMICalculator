@@ -1,10 +1,14 @@
 {% extends "bmi_calculator/base.html" %}
+{% comment %} tips.html -- PAGE 3. Dynamic: the heading and the list of tips both come from the context that
+   views.tips() builds from the ?category=... value in the URL. {% endcomment %}
 
 {% block content %}
     <h1>Tips for: {{ category }}</h1>
 
+    {# An empty list counts as False, so an unknown category falls through to the else message. #}
     {% if tip_list %}
         <ul>
+            {# The for loop repeats the <li> once per tip, so the number of bullets follows the data. #}
             {% for tip in tip_list %}
                 <li>{{ tip }}</li>
             {% endfor %}

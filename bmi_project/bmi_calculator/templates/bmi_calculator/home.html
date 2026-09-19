@@ -1,17 +1,26 @@
 {% extends "bmi_calculator/base.html" %}
+{% comment %} home.html -- PAGE 1. Static form; the view (views.home) passes no data to it.
+   "extends" (above) means: reuse base.html and only replace its content block. {% endcomment %}
 
 {% block content %}
     <h1>BMI Calculator</h1>
     <p>Enter your height and weight to calculate your Body Mass Index.</p>
 
-    <!-- This form submits a GET request to the 'result' view (see urls.py). -->
+    {% comment %} The form's action uses {% url 'result' %}, which Django turns into "/result/" by looking up
+       the route named "result" in urls.py. method="get" puts the typed values in the URL, e.g.
+       /result/?height=170&weight=65, which is where views.result reads them with request.GET. {% endcomment %}
     <form action="{% url 'result' %}" method="get">
+        {% comment %} The "name" attribute is the key used in the URL (?height=...). It must match the key
+           the view reads with request.GET.get("height"). "required" makes the browser refuse an
+           empty field, and type="number" only allows numbers; step="0.1" allows one decimal. {% endcomment %}
         <label for="height">Height (centimeters)</label>
         <input type="number" step="0.1" id="height" name="height" required>
 
+        {# Same idea for weight: name="weight" matches request.GET.get("weight") in the view. #}
         <label for="weight">Weight (kilograms)</label>
         <input type="number" step="0.1" id="weight" name="weight" required>
 
+        {# Clicking this submits the form: the browser sends a GET request to /result/ with the values. #}
         <button type="submit">Calculate BMI</button>
     </form>
 {% endblock %}
