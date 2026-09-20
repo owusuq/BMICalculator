@@ -1,4 +1,4 @@
-﻿# Overview
+# Overview
 
 As a software engineer, I wanted to practice building a dynamic, multi-page web application using a backend framework instead of only static HTML. This project let me learn how a Python web framework (Django) receives a request, runs logic in a view function, and returns a page built from a template with real data plugged into it.
 
@@ -27,9 +27,9 @@ I used Visual Studio Code as my editor, along with the Django web framework (ver
 
 # Useful Websites
 
-* [Django Documentation](https://docs.djangoproject.com/en/5.0/)
-* [Django Getting Started with Views](https://docs.djangoproject.com/en/5.0/intro/tutorial01/)
-* [Django Template Language Overview](https://docs.djangoproject.com/en/5.0/ref/templates/language/)
+* [Django Documentation](https://docs.djangoproject.com/en/stable/)
+* [Django Getting Started with Views](https://docs.djangoproject.com/en/stable/intro/tutorial01/)
+* [Django Template Language Overview](https://docs.djangoproject.com/en/stable/ref/templates/language/)
 
 # Future Work
 
