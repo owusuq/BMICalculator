@@ -13,7 +13,11 @@
     {% else %}
         {# No error, so show the successful result. #}
         <p>Your BMI is:</p>
+<<<<<<< HEAD
         <p class="bmi-number" id="bmiValue" data-target="{{ bmi }}">0.0</p>
+=======
+        <p class="bmi-number">{{ bmi }}</p>
+>>>>>>> ddec9862793c488f4b4a6bff5516b032adad1423
         <p>Category: <strong>{{ category }}</strong></p>
 
         {% comment %} Builds a link such as /tips/?category=Normal weight. This is how the category is handed
@@ -21,6 +25,7 @@
         <a class="button-link" href="{% url 'tips' %}?category={{ category }}">See Tips</a>
         <br>
         <a class="button-link" href="{% url 'home' %}">Calculate Again</a>
+<<<<<<< HEAD
 
         {% comment %} Counts the number above up from 0 to the real BMI instead of just showing
            it flat -- this is the one moment on the site that directly answers what the user
@@ -58,5 +63,7 @@
                 requestAnimationFrame(step);
             })();
         </script>
+=======
+>>>>>>> ddec9862793c488f4b4a6bff5516b032adad1423
     {% endif %}
 {% endblock %}
