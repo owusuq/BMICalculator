@@ -13,7 +13,6 @@
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f6f8;
-<<<<<<< HEAD
             min-height: 100vh;
             margin: 0;
             display: flex;
@@ -62,27 +61,16 @@
         .card {
             position: relative;
             z-index: 1;
-=======
-            display: flex;
-            justify-content: center;
-            padding-top: 50px;
-        }
-        /* The white rounded box that holds each page's content. */
-        .card {
->>>>>>> ddec9862793c488f4b4a6bff5516b032adad1423
             background: white;
             padding: 30px 40px;
             border-radius: 10px;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
             width: 350px;
-<<<<<<< HEAD
             animation: cardIn 0.6s ease-out;
         }
         @keyframes cardIn {
             from { opacity: 0; transform: translateY(16px); }
             to { opacity: 1; transform: translateY(0); }
-=======
->>>>>>> ddec9862793c488f4b4a6bff5516b032adad1423
         }
         /* Page heading style. */
         h1 {
@@ -102,7 +90,6 @@
             padding: 8px;
             margin-top: 5px;
             box-sizing: border-box;
-<<<<<<< HEAD
             border: 1px solid #cbd5df;
             border-radius: 4px;
             transition: border-color 0.15s ease, box-shadow 0.15s ease;
@@ -111,8 +98,6 @@
             outline: none;
             border-color: #2980b9;
             box-shadow: 0 0 0 3px rgba(41, 128, 185, 0.15);
-=======
->>>>>>> ddec9862793c488f4b4a6bff5516b032adad1423
         }
         /* Both real <button> elements and <a class="button-link"> links look like blue buttons. */
         button, .button-link {
@@ -126,7 +111,6 @@
             cursor: pointer;
             text-decoration: none;
             font-size: 15px;
-<<<<<<< HEAD
             transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
         }
         button:hover, .button-link:hover {
@@ -137,8 +121,6 @@
         button:active, .button-link:active {
             transform: translateY(0);
             box-shadow: 0 2px 4px rgba(41, 128, 185, 0.3);
-=======
->>>>>>> ddec9862793c488f4b4a6bff5516b032adad1423
         }
         /* The large BMI value on the result page. */
         .bmi-number {
@@ -155,7 +137,6 @@
         ul {
             padding-left: 20px;
         }
-<<<<<<< HEAD
         /* Respect anyone whose system is set to reduce motion: stop the looping
            background drift and the entrance/hover animations. */
         @media (prefers-reduced-motion: reduce) {
@@ -177,25 +158,12 @@
 <body>
     <div class="bg-blob bg-blob--blue"></div>
     <div class="bg-blob bg-blob--green"></div>
-=======
-    </style>
-</head>
-<body>
->>>>>>> ddec9862793c488f4b4a6bff5516b032adad1423
     <div class="card">
         {# A "block" is a placeholder. Each child page replaces this block with its own HTML. #}
         {% block content %}
         {% endblock %}
     </div>
     {# Footer stays fixed at the bottom of the window on every page. #}
-<<<<<<< HEAD
     <footer style="position: fixed; bottom: 0; left: 0; width: 100%; text-align: center; font-size: 12px; color: #7f8c8d; padding: 12px 0; background: #f4f6f8; z-index: 2;">Kwadjo Owusu-Ansah Quarshie &middot; CSE 310 &middot; Web Apps Module &middot; BYU-Pathway</footer>
 </body>
 </html>
-=======
-    <footer style="position: fixed; bottom: 0; left: 0; width: 100%; text-align: center; font-size: 12px; color: #7f8c8d; padding: 12px 0; background: #f4f6f8;">Kwadjo Owusu-Ansah Quarshie &middot; CSE 310 &middot; Web Apps Module &middot; BYU-Pathway</footer>
-</body>
-</html>
-
-
->>>>>>> ddec9862793c488f4b4a6bff5516b032adad1423
