@@ -15,7 +15,7 @@ My purpose in writing this software was to learn how a NoSQL cloud database work
 | Update | `update_record` view edits a note |
 | Delete | `delete_record` view removes a record |
 
-[Software Demo Video](PASTE_YOUR_NEW_YOUTUBE_LINK_HERE)
+[Software Demo Video](https://youtu.be/u2HbMJmKVxU)
 
 # Cloud Database
 
@@ -74,3 +74,4 @@ If the database cannot be reached the calculator still works, and the History pa
 * Add user login so each person only sees their own history
 * Add a chart of BMI over time
 * Add a metric/imperial unit toggle
+
