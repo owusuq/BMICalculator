@@ -15,3 +15,7 @@ Thumbs.db
 
 # Vercel
 .vercel/
+
+# Firebase secrets - NEVER commit these
+serviceAccountKey.json
+*-firebase-adminsdk-*.json

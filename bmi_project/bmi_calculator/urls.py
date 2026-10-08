@@ -39,4 +39,9 @@ urlpatterns = [
     path("result/", views.result, name="result"),
     # The "See Tips" link on the result page goes here. Handled by tips().
     path("tips/", views.tips, name="tips"),
+    # Cloud database pages (Module 3). <str:record_id> captures the Firestore
+    # document ID from the URL and passes it to the view as an argument.
+    path("history/", views.history, name="history"),
+    path("history/<str:record_id>/update/", views.update_record, name="update_record"),
+    path("history/<str:record_id>/delete/", views.delete_record, name="delete_record"),
 ]

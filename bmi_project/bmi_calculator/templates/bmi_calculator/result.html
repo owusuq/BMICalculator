@@ -18,7 +18,15 @@
 
         {% comment %} Builds a link such as /tips/?category=Normal weight. This is how the category is handed
            to the tips page: it travels in the query string and views.tips() reads it back. {% endcomment %}
+        {# Tell the user whether the calculation reached the Firestore cloud database. #}
+        {% if saved_to_cloud %}
+            <p style="color:#27ae60;">&#10003; Saved to your cloud history.</p>
+        {% else %}
+            <p style="color:#7f8c8d;">Not saved (cloud database not connected).</p>
+        {% endif %}
+
         <a class="button-link" href="{% url 'tips' %}?category={{ category }}">See Tips</a>
+        <a class="button-link" href="{% url 'history' %}">View History</a>
         <br>
         <a class="button-link" href="{% url 'home' %}">Calculate Again</a>
 

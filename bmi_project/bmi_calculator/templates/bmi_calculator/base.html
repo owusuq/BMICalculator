@@ -142,6 +142,15 @@
         ul {
             padding-left: 20px;
         }
+        /* History table (Module 3): the card is wider on that page so the table fits. */
+        .card.wide { max-width: 680px; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        th, td { text-align: left; padding: 6px 4px; border-bottom: 1px solid #ecf0f1; }
+        form { margin: 0; }
+        input[type="text"] { width: 100%; min-width: 80px; padding: 4px; box-sizing: border-box; border: 1px solid #cbd5df; border-radius: 4px; }
+        button.small { margin-top: 0; padding: 4px 8px; font-size: 12px; }
+        button.danger { background-color: #c0392b; }
+        .table-wrap { overflow-x: auto; }
         /* Phones: tighter spacing, 16px inputs (stops iOS auto-zoom), full-width tap-friendly buttons. */
         @media (max-width: 480px) {
             body {
@@ -196,12 +205,12 @@
 <body>
     <div class="bg-blob bg-blob--blue"></div>
     <div class="bg-blob bg-blob--green"></div>
-    <div class="card">
+    <div class="card {% block card_class %}{% endblock %}">
         {# A "block" is a placeholder. Each child page replaces this block with its own HTML. #}
         {% block content %}
         {% endblock %}
     </div>
     {# Footer stays fixed at the bottom of the window on every page. #}
-    <footer style="position: fixed; bottom: 0; left: 0; width: 100%; text-align: center; font-size: 12px; color: #7f8c8d; padding: 12px 16px; box-sizing: border-box; background: #f4f6f8; z-index: 2;">Kwadjo Owusu-Ansah Quarshie &middot; CSE 310 &middot; Web Apps Module &middot; BYU-Pathway</footer>
+    <footer style="position: fixed; bottom: 0; left: 0; width: 100%; text-align: center; font-size: 12px; color: #7f8c8d; padding: 12px 16px; box-sizing: border-box; background: #f4f6f8; z-index: 2;">Kwadjo Owusu-Ansah Quarshie &middot; CSE 310 &middot; Cloud Databases Module &middot; BYU-Pathway</footer>
 </body>
 </html>

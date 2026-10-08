@@ -1,0 +1,50 @@
+{% extends "bmi_calculator/base.html" %}
+{% comment %} history.html -- PAGE 4. Shows every record read from the Firestore cloud database.
+   Each row has a form to UPDATE the note (POST) and a form to DELETE the record (POST).
+   {% csrf_token %} adds Django's hidden security token that every POST form must include. {% endcomment %}
+
+{% block card_class %}wide{% endblock %}
+
+{% block content %}
+    <h1>Calculation History</h1>
+
+    {% if not connected %}
+        {# No Firebase key was found, so there is nothing to read. #}
+        <p class="error">The cloud database is not connected. Check the Firebase settings in firestore_service.py.</p>
+    {% elif error %}
+        {# Firestore answered with an error, e.g. the security rules do not allow access. #}
+        <p class="error">Could not load history: {{ error }}</p>
+    {% elif not records %}
+        <p>No saved calculations yet. Calculate a BMI first!</p>
+    {% else %}
+        <div class="table-wrap">
+        <table>
+            <tr><th>Date</th><th>BMI</th><th>Category</th><th>Note</th><th></th></tr>
+            {% for r in records %}
+            <tr>
+                <td>{{ r.created_at|date:"d M H:i" }}</td>
+                <td>{{ r.bmi }}</td>
+                <td>{{ r.category }}</td>
+                <td>
+                    {# UPDATE: edit the note and save it back to Firestore. #}
+                    <form method="post" action="{% url 'update_record' r.id %}">
+                        {% csrf_token %}
+                        <input type="text" name="note" value="{{ r.note }}" maxlength="200" placeholder="Add note">
+                        <button type="submit" class="small">Save</button>
+                    </form>
+                </td>
+                <td>
+                    {# DELETE: remove this record from Firestore. #}
+                    <form method="post" action="{% url 'delete_record' r.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="small danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        </div>
+    {% endif %}
+
+    <a class="button-link" href="{% url 'home' %}">Back to Calculator</a>
+{% endblock %}

@@ -13,10 +13,15 @@ HOW A DJANGO VIEW WORKS (the big picture):
     5. The view calls render(), which fills an HTML template with our data and
        returns an "HttpResponse". Django sends that HTML back to the browser.
 
-There are three views in this app (one per web page):
-    1. home   -> shows the input form (height and weight)
-    2. result -> calculates the BMI and shows the number + category
-    3. tips   -> shows advice based on the BMI category from the result page
+There are six views in this app:
+    1. home           -> shows the input form (height and weight)
+    2. result         -> calculates the BMI, SAVES it to Firestore, shows it
+    3. tips           -> shows advice based on the BMI category from the result page
+    4. history        -> READS saved calculations back from the Firestore cloud database
+    5. update_record  -> UPDATES the note on one saved calculation
+    6. delete_record  -> DELETES one saved calculation
+
+The cloud database code itself lives in firestore_service.py.
 
 There are also two plain helper functions (calculate_bmi and get_bmi_category).
 They are NOT views: they never receive a request and never return a response.
@@ -26,7 +31,14 @@ the web-handling code and makes it easy to test on its own.
 
 # render() is Django's shortcut for: load a template file, fill it in with
 # our data (the "context"), and return the finished HTML as an HttpResponse.
-from django.shortcuts import render
+# redirect() sends the browser to a different URL (used after update/delete).
+# require_POST makes a view reject anything except a form submitted with POST,
+# so a record can never be changed or deleted just by visiting a link.
+from django.shortcuts import render, redirect
+from django.views.decorators.http import require_POST
+
+# Our own helper file that talks to the Firestore cloud database.
+from . import firestore_service
 
 
 def calculate_bmi(weight_kg, height_m):
@@ -145,6 +157,7 @@ def result(request):
     error_message = None
     bmi = None
     category = None
+    saved_to_cloud = False   # becomes True only if Firestore accepted the record
 
     # try/except lets us attempt risky code and handle failure gracefully
     # instead of letting the whole page crash with a server error.
@@ -174,6 +187,13 @@ def result(request):
             # Step 2: turn that number into a category word using our other helper.
             category = get_bmi_category(bmi)
 
+            # Step 3 (CREATE): store this calculation in the Firestore cloud
+            # database. save_record() returns the new document's ID, or None
+            # if there is no database connection -- in that case the BMI is
+            # still shown, it just is not saved to the history.
+            saved_id = firestore_service.save_record(height_cm, weight_kg, bmi, category)
+            saved_to_cloud = saved_id is not None
+
     except ValueError:
         # This happens if the user leaves the fields blank or types
         # something that is not a number.
@@ -190,6 +210,7 @@ def result(request):
         "bmi": bmi,
         "category": category,
         "error_message": error_message,
+        "saved_to_cloud": saved_to_cloud,
     }
 
     # Fill result.html with the context and send the HTML back to the browser.
@@ -259,3 +280,64 @@ def tips(request):
         "tip_list": tip_list,
     }
     return render(request, "bmi_calculator/tips.html", context)
+
+
+def history(request):
+    """
+    Page 4: History page (READ from the cloud database).
+
+    Asks Firestore for the most recent saved BMI calculations and shows them
+    in a table. Each row has a form to edit its note and a button to delete it.
+
+    Parameters:
+        request -- the HttpRequest (not used directly, Django always passes it).
+
+    Returns:
+        The rendered history.html page with the list of saved records.
+    """
+    # get_history() returns a list of dictionaries (newest first), or an empty
+    # list if there is no database connection or nothing has been saved yet.
+    records = firestore_service.get_history()
+
+    # "connected" lets the template tell the difference between "no records
+    # yet" and "the database is not set up", so the user sees a helpful message.
+    context = {
+        "records": records,
+        "connected": firestore_service.get_db() is not None,
+        # The reason the last database request failed (empty if it worked),
+        # for example a security-rules "permission denied" message.
+        "error": firestore_service.last_error,
+    }
+    return render(request, "bmi_calculator/history.html", context)
+
+
+@require_POST
+def update_record(request, record_id):
+    """
+    UPDATE: save a new note for one record, then go back to the history page.
+
+    Parameters:
+        request   -- the HttpRequest; the new note is in request.POST["note"]
+        record_id -- the Firestore document ID, taken from the URL
+
+    Returns:
+        A redirect back to the history page.
+    """
+    firestore_service.update_note(record_id, request.POST.get("note", ""))
+    return redirect("history")
+
+
+@require_POST
+def delete_record(request, record_id):
+    """
+    DELETE: permanently remove one record, then go back to the history page.
+
+    Parameters:
+        request   -- the HttpRequest (must be a POST from the delete button)
+        record_id -- the Firestore document ID, taken from the URL
+
+    Returns:
+        A redirect back to the history page.
+    """
+    firestore_service.delete_record(record_id)
+    return redirect("history")
